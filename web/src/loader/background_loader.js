@@ -1,9 +1,7 @@
 export default function loadBGPackage(pkg) {
-  const { type, id } = pkg;
+  const { type, id, manifest } = pkg;
   if (type !== "BACKGROUND") {
     return;
   }
-  window.chrome.__pkg__ = {
-    type, id
-  }
+  window.chrome.__pkg__ = pkg
 }

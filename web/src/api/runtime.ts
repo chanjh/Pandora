@@ -1,13 +1,13 @@
 import { jsbridge } from "gcjsbridge/src/invoker";
 
 export default class Runtime {
-  getURL(path) {
+  getURL(path: string) {
     // get html from package
     return `chrome-extension://${window.chrome.__pkg__.id}/${path}`
   }
 
   get onInstalled() {
-    const addListener = function (fn) {
+    const addListener = function (fn: Function) {
       window.gc.bridge.eventCenter.subscribe('PD_EVENT_RUNTIME_ONINSTALLED', fn);
     }
     return { addListener }
@@ -17,7 +17,7 @@ export default class Runtime {
     return window.chrome.__pkg__.manifest;
   }
 
-  async getPlatformInfo(callback) {
+  async getPlatformInfo(callback?: Function) {
     const info = await jsbridge('runtime.getPlatformInfo')
     if (callback) {
       callback(info)
@@ -26,7 +26,7 @@ export default class Runtime {
   }
 
   // todo: create tab
-  openOptionsPage(callback) {
+  openOptionsPage(callback?: Function) {
     const manifest = this.getManifest()
     const ui = manifest.options_ui
     if (ui) {
@@ -49,7 +49,7 @@ export default class Runtime {
   }
   // Most extensions/apps should not use this method, 
   // since Chrome already does automatic checks every few hours
-  requestUpdateCheck(callback) {
+  requestUpdateCheck(callback?: Function) {
 
   }
   // Restart the ChromeOS device when the app runs in kiosk mode. 
@@ -58,14 +58,14 @@ export default class Runtime {
 
   }
 
-  restartAfterDelay(seconds, callback) {
+  restartAfterDelay(seconds: number, callback?: Function) {
 
   }
 
-  sendMessage(extensionId,
-    message,
-    options,
-    callback) {
+  sendMessage(extensionId: string,
+    message: any,
+    options: any,
+    callback?: Function) {
 
   }
 }

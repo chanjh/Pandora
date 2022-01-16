@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "lib": [
+      "ES2021.String",
+      "DOM"
+    ],
+    "types": [
+      "node",
+      "webpack-env"
+    ]
+  },
+  "include": [
+    "./src/"
+  ],
+  "exclude": [
+    "node_modules",
+    "./Frontend/",
+    "./example/",
+    "./dist/",
+    "./build/",
+    "./.vscode/"
+  ]
+}

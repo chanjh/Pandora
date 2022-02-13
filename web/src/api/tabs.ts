@@ -5,6 +5,38 @@ enum TabStatus {
 enum WindowType {
 
 }
+interface TabCreateProperties {
+  active?: boolean;
+  index?: number;
+  openerTabId?: number;
+  pinned?: boolean;
+  url?: string;
+  windowId?: number;
+}
+
+interface Tab {
+  active?: boolean;
+  audible?: boolean;
+  autoDiscardable?: boolean;
+  discarded?: boolean;
+  favIconUrl?: string;
+  groupId?: number;
+  height?: number;
+  highlighted?: boolean;
+  id?: number;
+  incognito?: boolean; // todo, 不是可选
+  index?: number; // todo, 不是可选
+  mutedInfo?: object; // todo
+  openerTabId?: number;
+  pendingUrl?: string;
+  pinned?: boolean; // todo, 不是可选
+  sessionId?: string;
+  status?: TabStatus;
+  title?: string;
+  url?: string;
+  windowId?: number; // todo, 不是可选
+  width?: number;
+}
 interface TabQueryInfo {
   active?: boolean;
   audible?: boolean;
@@ -23,10 +55,12 @@ interface TabQueryInfo {
   windowId?: number;
   windowType?: WindowType;
 }
+type CreateTabCallback = (tab: Tab) => void;
+type QueryTabCallback = (result: Tab[]) => void;
 
 export default class Tabs {
-  async create(url: string) {
-    return await jsbridge('runtime.tabs.create', url)
+  create(createProperties: TabCreateProperties, callback?: CreateTabCallback) {
+    jsbridge('runtime.tabs.create', createProperties, callback)
   }
   remove(
     tabIds: number | number[],
@@ -36,7 +70,7 @@ export default class Tabs {
   }
   query(
     queryInfo: TabQueryInfo,
-    callback?: Function) {
+    callback?: QueryTabCallback) {
     jsbridge('runtime.tabs.query', { queryInfo }, callback);
   }
   // Sends a single message to the content script(s) in the specified tab
@@ -47,5 +81,14 @@ export default class Tabs {
     callback?: Function,
   ) {
     jsbridge('runtime.tabs.sendMessage', { tabId, message, options: options ?? {} }, callback);
+  }
+
+  get onRemoved() {
+    const addListener = function (fn: Function) {
+      window.gc.bridge.eventCenter.subscribe('PD_EVENT_TABS_ONREMOVED', function (result: any) {
+        fn(result['tabId'], result['removeInfo'])
+      });
+    }
+    return { addListener }
   }
 }

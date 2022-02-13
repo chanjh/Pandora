@@ -57,7 +57,7 @@ export default class Runtime {
 
   // todo: create tab
   openOptionsPage(callback?: Function) {
-    jsbridge('runtime.openOptionsPage')
+    jsbridge('runtime.openOptionsPage', undefined, callback)
   }
 
   // Reloads the app or extension.

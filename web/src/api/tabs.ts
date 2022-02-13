@@ -39,12 +39,13 @@ export default class Tabs {
     callback?: Function) {
     jsbridge('runtime.tabs.query', { queryInfo }, callback);
   }
+  // Sends a single message to the content script(s) in the specified tab
   sendMessage(
     tabId: number,
     message: any,
     options?: { frameId: number | undefined },
     callback?: Function,
   ) {
-    jsbridge('runtime.tabs.query', { tabId, message, options }, callback);
+    jsbridge('runtime.tabs.sendMessage', { tabId, message, options: options ?? {} }, callback);
   }
 }

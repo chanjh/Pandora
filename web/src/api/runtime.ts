@@ -3,6 +3,7 @@ import invoker from "gcjsbridge/src/invoker";
 import MessageSender from "./msg_sender";
 
 export default class Runtime {
+  // todo: cannot use on content script
   getURL(path: string) {
     // get html from package
     return `chrome-extension://${window.chrome.__pkg__.id}/${path}`
@@ -33,6 +34,7 @@ export default class Runtime {
   }
 
   // todo: async
+  // Sends a single message to event listeners within your extension/app or a different extension/app
   sendMessage(
     extensionId: string|undefined,
     message: any,
@@ -55,18 +57,7 @@ export default class Runtime {
 
   // todo: create tab
   openOptionsPage(callback?: Function) {
-    const manifest = this.getManifest()
-    const ui = manifest.options_ui
-    if (ui) {
-
-      return
-    }
-
-    const page = manifest.options_page;
-    if (page) {
-
-      return
-    }
+    jsbridge('runtime.openOptionsPage')
   }
 
   // Reloads the app or extension.

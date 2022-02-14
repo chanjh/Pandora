@@ -1,1 +1,1 @@
-export default class MessageSender {}
+export default class MessageSender { }

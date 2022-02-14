@@ -3,6 +3,7 @@ import invoker from "gcjsbridge/src/invoker";
 import MessageSender from "./msg_sender";
 
 export default class Runtime {
+  // todo: cannot use on content script
   getURL(path: string) {
     // get html from package
     return `chrome-extension://${window.chrome.__pkg__.id}/${path}`
@@ -18,13 +19,13 @@ export default class Runtime {
   get onMessage() {
     // (message: any, sender: MessageSender, sendResponse: function) => boolean | undefined
     const addListener = function (fn: Function) {
-      window.gc.bridge.eventCenter.subscribe('PD_EVENT_RUNTIME_ONMESSAGE', function() {
+      window.gc.bridge.eventCenter.subscribe('PD_EVENT_RUNTIME_ONMESSAGE', function () {
         const arg = arguments
-        fn(arg?.[0]?.param, new MessageSender(), async function(response: any) {
+        fn(arg?.[0]?.param, new MessageSender(), async function (response: any) {
           const cb = arg?.[0]?.callback
           const extensionId = arg?.[0]?.senderId
           if (cb.length > 0) {
-            invoker('runtime.sendResponse', {extensionId, response}, cb)
+            invoker('runtime.sendResponse', { extensionId, response }, cb)
           }
         })
       });
@@ -33,14 +34,15 @@ export default class Runtime {
   }
 
   // todo: async
+  // Sends a single message to event listeners within your extension/app or a different extension/app
   sendMessage(
-    extensionId: string|undefined,
+    extensionId: string | undefined,
     message: any,
     options?: object,
     callback?: Function) {
-    jsbridge('runtime.sendMessage',{extensionId,message}, callback);
+    jsbridge('runtime.sendMessage', { extensionId, message }, callback);
   }
-  
+
   getManifest() {
     return window.chrome.__pkg__.manifest;
   }
@@ -55,18 +57,7 @@ export default class Runtime {
 
   // todo: create tab
   openOptionsPage(callback?: Function) {
-    const manifest = this.getManifest()
-    const ui = manifest.options_ui
-    if (ui) {
-
-      return
-    }
-
-    const page = manifest.options_page;
-    if (page) {
-
-      return
-    }
+    jsbridge('runtime.openOptionsPage', undefined, callback)
   }
 
   // Reloads the app or extension.

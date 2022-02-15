@@ -56,4 +56,9 @@ export default class ContextMenu {
   ) {
     jsbridge('contextMenus.update', { id, updateProperties }, callback)
   }
+
+  __noSuchMethod__(name: any, args: any) {
+    console.log(`No such method ${name} called with ${args}`);
+    return;
+  };
 }

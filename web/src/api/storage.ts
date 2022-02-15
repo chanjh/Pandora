@@ -25,4 +25,9 @@ class StorageArea {
   clear(callback?: Function) {
     jsbridge(`storage.${this.api}.clear`, null, callback);
   }
+
+  __noSuchMethod__(name: any, args: any) {
+    console.log(`No such method ${name} called with ${args}`);
+    return;
+  };
 }

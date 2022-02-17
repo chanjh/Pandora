@@ -29,4 +29,9 @@ export default class Bookmarks {
   getTree(callback?: Function) {
     jsbridge('bookmarks.getTree', null, callback)
   }
+
+  __noSuchMethod__(name: any, args: any) {
+    console.log(`No such method ${name} called with ${args}`);
+    return;
+  };
 }

@@ -1,4 +1,5 @@
 import register from 'gcjsbridge/src/register';
+import ClassProxy from '../no_such_method';
 import Bookmarks from './bookmarks';
 import ContextMenu from './context_menus';
 import Runtime from './runtime';
@@ -9,24 +10,30 @@ export default class Chrome {
   __loader__: any;
 
   get runtime() {
-    return new Runtime();
+    return ClassProxy(new Runtime());
   }
 
   get tabs() {
-    return new Tabs();
+    return ClassProxy(new Tabs());
   }
 
   get bookmarks() {
-    return new Bookmarks();
+    return ClassProxy(new Bookmarks());
   }
 
   get contextMenus() {
-    return new ContextMenu();
+    return ClassProxy(new ContextMenu());
   }
 
   get storage() {
-    return new Storage();
+    return ClassProxy(new Storage());
   }
+
+  __noSuchMethod__(name: any, args: any) {
+    console.log(`No such method ${name} called with ${args}`);
+    return;
+  };
 }
-register('chrome', new Chrome());
+
+register('chrome', ClassProxy(new Chrome()));
 window.chrome = window.gc.bridge.chrome;

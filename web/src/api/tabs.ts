@@ -91,4 +91,9 @@ export default class Tabs {
     }
     return { addListener }
   }
+
+  __noSuchMethod__(name: any, args: any) {
+    console.log(`No such method ${name} called with ${args}`);
+    return;
+  };
 }

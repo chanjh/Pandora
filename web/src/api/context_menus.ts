@@ -57,6 +57,13 @@ export default class ContextMenu {
     jsbridge('contextMenus.update', { id, updateProperties }, callback)
   }
 
+  get onClicked() {
+    const addListener = function (fn: Function) {
+      window.gc.bridge.eventCenter.subscribe('PD_EVENT_CONTEXTMENU_ONCLICKED', fn);
+    }
+    return { addListener }
+  }
+
   __noSuchMethod__(name: any, args: any) {
     console.log(`No such method ${name} called with ${args}`);
     return;

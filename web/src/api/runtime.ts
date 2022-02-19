@@ -1,12 +1,36 @@
 import { jsbridge } from "gcjsbridge/src/invoker";
 import invoker from "gcjsbridge/src/invoker";
 import MessageSender from "./msg_sender";
+enum RunAt {
+
+}
+interface CSSOrigin {
+  author?: string;
+  user?: string;
+}
+interface InjectDetails {
+  allFrames?: boolean;
+  code?: string;
+  cssOrigin?: CSSOrigin;
+  file?: string
+  frameId?: number
+  matchAboutBlank?: boolean
+  runAt?: RunAt
+}
 
 export default class Runtime {
   // todo: cannot use on content script
-  getURL(path: string) {
+  getURL(path?: string) {
     // get html from package
-    return `chrome-extension://${window.chrome.__pkg__.id}/${path}`
+    return `chrome-extension://${window.chrome.__pkg__.id}/${path ?? ''}`
+  }
+
+  executeScript(
+    tabId?: number,
+    details?: InjectDetails,
+    callback?: Function,
+  ) {
+    jsbridge('runtime.executeScript', { tabId, details }, callback);
   }
 
   get onInstalled() {

@@ -2,9 +2,13 @@ import register from 'gcjsbridge/src/register';
 import ClassProxy from '../no_such_method';
 import Bookmarks from './bookmarks';
 import ContextMenu from './context_menus';
+import Extension from './extension';
 import Runtime from './runtime';
 import Storage from './storage';
 import Tabs from './tabs';
+import Command from './commands';
+import PageAction from './page_action';
+
 export default class Chrome {
   __pkg__: any;
   __loader__: any;
@@ -27,6 +31,18 @@ export default class Chrome {
 
   get storage() {
     return ClassProxy(new Storage());
+  }
+
+  get extension() {
+    return ClassProxy(new Extension());
+  }
+
+  get commands() {
+    return ClassProxy(new Command());
+  }
+
+  get pageAction() {
+    return ClassProxy(new PageAction());
   }
 
   __noSuchMethod__(name: any, args: any) {

@@ -37,6 +37,7 @@ interface Tab {
   windowId?: number; // todo, 不是可选
   width?: number;
 }
+
 interface TabQueryInfo {
   active?: boolean;
   audible?: boolean;
@@ -87,6 +88,24 @@ export default class Tabs {
     const addListener = function (fn: Function) {
       window.gc.bridge.eventCenter.subscribe('PD_EVENT_TABS_ONREMOVED', function (result: any) {
         fn(result['tabId'], result['removeInfo'])
+      });
+    }
+    return { addListener }
+  }
+
+  get onActivated() {
+    const addListener = function (fn: Function) {
+      window.gc.bridge.eventCenter.subscribe('PD_EVENT_TABS_ONACTIVATED', function (result: any) {
+
+      });
+    }
+    return { addListener }
+  }
+
+  get onUpdated() {
+    const addListener = function (fn: Function) {
+      window.gc.bridge.eventCenter.subscribe('PD_EVENT_TABS_ONUPDATED', function (result: any) {
+
       });
     }
     return { addListener }

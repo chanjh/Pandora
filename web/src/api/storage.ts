@@ -19,7 +19,11 @@ class StorageArea {
   get(
     keys?: string | string[] | object,
     callback?: Function) {
-    jsbridge(`storage.${this.api}.get`, { keys }, callback);
+    jsbridge(`storage.${this.api}.get`, { keys }, function (e: any) {
+      if (callback) {
+        callback(e.result);
+      }
+    });
   }
 
   clear(callback?: Function) {

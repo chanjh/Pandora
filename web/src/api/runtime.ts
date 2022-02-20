@@ -30,7 +30,7 @@ export default class Runtime {
     details?: InjectDetails,
     callback?: Function,
   ) {
-    jsbridge('runtime.executeScript', { tabId, details }, callback);
+    return jsbridge('runtime.executeScript', { tabId, details }, callback);
   }
 
   get onInstalled() {
@@ -64,7 +64,7 @@ export default class Runtime {
     message: any,
     options?: object,
     callback?: Function) {
-    jsbridge('runtime.sendMessage', { extensionId, message }, callback);
+    return jsbridge('runtime.sendMessage', { extensionId, message }, callback);
   }
 
   getManifest() {
@@ -72,16 +72,12 @@ export default class Runtime {
   }
 
   async getPlatformInfo(callback?: Function) {
-    const info = await jsbridge('runtime.getPlatformInfo')
-    if (callback) {
-      callback(info)
-    }
-    return info
+    return jsbridge('runtime.getPlatformInfo', null, callback)
   }
 
   // todo: create tab
   openOptionsPage(callback?: Function) {
-    jsbridge('runtime.openOptionsPage', undefined, callback)
+    return jsbridge('runtime.openOptionsPage', undefined, callback)
   }
 
   // Reloads the app or extension.

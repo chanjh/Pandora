@@ -33,20 +33,20 @@ export default class ContextMenu {
     createProperties: MenuItem,
     callback?: Function,
   ) {
-    jsbridge('contextMenus.create', { createProperties }, callback)
+    return jsbridge('contextMenus.create', { createProperties }, callback)
   }
 
   remove(
     menuItemId: string | number,
     callback?: Function,
   ) {
-    jsbridge('contextMenus.remove', { menuItemId }, callback)
+    return jsbridge('contextMenus.remove', { menuItemId }, callback)
   }
 
   removeAll(
     callback?: Function
   ) {
-    jsbridge('contextMenus.removeAll', null, callback)
+    return jsbridge('contextMenus.removeAll', null, callback)
   }
 
   update(
@@ -54,7 +54,7 @@ export default class ContextMenu {
     updateProperties: MenuItem,
     callback?: Function,
   ) {
-    jsbridge('contextMenus.update', { id, updateProperties }, callback)
+    return jsbridge('contextMenus.update', { id, updateProperties }, callback)
   }
 
   get onClicked() {

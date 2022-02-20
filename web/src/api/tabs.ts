@@ -61,18 +61,18 @@ type QueryTabCallback = (result: Tab[]) => void;
 
 export default class Tabs {
   create(createProperties: TabCreateProperties, callback?: CreateTabCallback) {
-    jsbridge('runtime.tabs.create', createProperties, callback)
+    return jsbridge('runtime.tabs.create', createProperties, callback)
   }
   remove(
     tabIds: number | number[],
     callback?: Function,
   ) {
-    jsbridge('runtime.tabs.remove', { tabIds }, callback);
+    return jsbridge('runtime.tabs.remove', { tabIds }, callback);
   }
   query(
     queryInfo: TabQueryInfo,
     callback?: QueryTabCallback) {
-    jsbridge('runtime.tabs.query', { queryInfo }, callback);
+    return jsbridge('runtime.tabs.query', { queryInfo }, callback);
   }
   // Sends a single message to the content script(s) in the specified tab
   sendMessage(
@@ -81,7 +81,7 @@ export default class Tabs {
     options?: { frameId: number | undefined },
     callback?: Function,
   ) {
-    jsbridge('runtime.tabs.sendMessage', { tabId, message, options: options ?? {} }, callback);
+    return jsbridge('runtime.tabs.sendMessage', { tabId, message, options: options ?? {} }, callback);
   }
 
   get onRemoved() {

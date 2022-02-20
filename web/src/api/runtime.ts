@@ -57,14 +57,28 @@ export default class Runtime {
     return { addListener }
   }
 
-  // todo: async
   // Sends a single message to event listeners within your extension/app or a different extension/app
-  sendMessage(
+  sendMessage() {
+    let version = this.getManifest().manifest_version
+    if (version == 3) {
+      return this._sendMessageV3.apply(this, arguments)
+    } else {
+      return this._sendMessageV2.apply(this, arguments)
+    }
+  }
+
+  _sendMessageV3 = function (
     extensionId: string | undefined,
     message: any,
     options?: object,
     callback?: Function) {
     return jsbridge('runtime.sendMessage', { extensionId, message }, callback);
+  }
+
+  _sendMessageV2 = function (
+    message: any,
+    callback?: Function) {
+    return jsbridge('runtime.sendMessage', message, callback);
   }
 
   getManifest() {

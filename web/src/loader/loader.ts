@@ -6,7 +6,7 @@ import loadBGPackage from "./background_loader";
 // PAGE_ACTION
 export default function loadPackage(pkg: { type: string, id: string, manifest: any }) {
   const { type } = pkg;
-  if (type === "BACKGROUND") {
+  if (type === "BACKGROUND" || type === "CONTENT") {
     loadBGPackage(pkg);
   }
 }

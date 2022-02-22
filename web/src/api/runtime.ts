@@ -1,12 +1,36 @@
 import { jsbridge } from "gcjsbridge/src/invoker";
 import invoker from "gcjsbridge/src/invoker";
 import MessageSender from "./msg_sender";
+enum RunAt {
+
+}
+interface CSSOrigin {
+  author?: string;
+  user?: string;
+}
+interface InjectDetails {
+  allFrames?: boolean;
+  code?: string;
+  cssOrigin?: CSSOrigin;
+  file?: string
+  frameId?: number
+  matchAboutBlank?: boolean
+  runAt?: RunAt
+}
 
 export default class Runtime {
   // todo: cannot use on content script
-  getURL(path: string) {
+  getURL(path?: string) {
     // get html from package
-    return `chrome-extension://${window.chrome.__pkg__.id}/${path}`
+    return `chrome-extension://${window.chrome.__pkg__.id}/${path ?? ''}`
+  }
+
+  executeScript(
+    tabId?: number,
+    details?: InjectDetails,
+    callback?: Function,
+  ) {
+    return jsbridge('runtime.executeScript', { tabId, details }, callback);
   }
 
   get onInstalled() {
@@ -33,14 +57,28 @@ export default class Runtime {
     return { addListener }
   }
 
-  // todo: async
   // Sends a single message to event listeners within your extension/app or a different extension/app
-  sendMessage(
+  sendMessage() {
+    let version = this.getManifest().manifest_version
+    if (version == 3) {
+      return this._sendMessageV3.apply(this, arguments)
+    } else {
+      return this._sendMessageV2.apply(this, arguments)
+    }
+  }
+
+  _sendMessageV3 = function (
     extensionId: string | undefined,
     message: any,
     options?: object,
     callback?: Function) {
-    jsbridge('runtime.sendMessage', { extensionId, message }, callback);
+    return jsbridge('runtime.sendMessage', { extensionId, message }, callback);
+  }
+
+  _sendMessageV2 = function (
+    message: any,
+    callback?: Function) {
+    return jsbridge('runtime.sendMessage', message, callback);
   }
 
   getManifest() {
@@ -48,16 +86,12 @@ export default class Runtime {
   }
 
   async getPlatformInfo(callback?: Function) {
-    const info = await jsbridge('runtime.getPlatformInfo')
-    if (callback) {
-      callback(info)
-    }
-    return info
+    return jsbridge('runtime.getPlatformInfo', null, callback)
   }
 
   // todo: create tab
   openOptionsPage(callback?: Function) {
-    jsbridge('runtime.openOptionsPage', undefined, callback)
+    return jsbridge('runtime.openOptionsPage', undefined, callback)
   }
 
   // Reloads the app or extension.

@@ -13,17 +13,21 @@ class StorageArea {
   }
 
   set(items: any, callback?: Function) {
-    jsbridge(`storage.${this.api}.set`, items, callback);
+    return jsbridge(`storage.${this.api}.set`, items, callback);
   }
 
   get(
     keys?: string | string[] | object,
     callback?: Function) {
-    jsbridge(`storage.${this.api}.get`, { keys }, callback);
+    return jsbridge(`storage.${this.api}.get`, { keys }, function (e: any) {
+      if (callback) {
+        callback(e.result);
+      }
+    });
   }
 
   clear(callback?: Function) {
-    jsbridge(`storage.${this.api}.clear`, null, callback);
+    return jsbridge(`storage.${this.api}.clear`, null, callback);
   }
 
   __noSuchMethod__(name: any, args: any) {

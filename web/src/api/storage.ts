@@ -16,14 +16,14 @@ class StorageArea {
     return jsbridge(`storage.${this.api}.set`, items, callback);
   }
 
-  get(
+  async get(
     keys?: string | string[] | object,
     callback?: Function) {
-    return jsbridge(`storage.${this.api}.get`, { keys }, function (e: any) {
+    return (await jsbridge(`storage.${this.api}.get`, { keys }, function (e: any) {
       if (callback) {
         callback(e.result);
       }
-    });
+    }))?.result;
   }
 
   clear(callback?: Function) {

@@ -4,28 +4,27 @@
 // - Remove
 // - update
 
+import wrapCallback from "gcjsbridge/src/callback_wrapper";
 import { jsbridge } from "gcjsbridge/src/invoker"
 
-enum ContextType {
+type ContextType = "all" | "page" | "frame" | "selection" | "link" | "editable" | "image" |
+  "video" | "audio" | "launcher" | "browser_action" | "page_action" | "action"
 
-}
-
-enum ItemType {
-
-}
+type ItemType = "normal" | "checkbox" | "radio" | "separator";
 
 interface MenuItem {
-  checked: boolean;
-  contexts: ContextType[];
-  documentUrlPatterns: string[];
-  enabled: boolean;
-  id: string;
-  parentId: string | number;
-  targetUrlPatterns: string[];
-  title: string[];
-  type: ItemType;
-  visible: boolean;
-  onclick: Function;
+  checked?: boolean;
+  contexts?: ContextType[];
+  documentUrlPatterns?: string[];
+  enabled?: boolean;
+  id?: string;
+  parentId?: string | number;
+  targetUrlPatterns?: string[];
+  title?: string[];
+  type?: ItemType;
+  visible?: boolean;
+  onclick?: Function;
+  onclickCallback?: string;
 }
 
 export default class ContextMenu {
@@ -33,7 +32,22 @@ export default class ContextMenu {
     createProperties: MenuItem,
     callback?: Function,
   ) {
-    return jsbridge('contextMenus.create', { createProperties }, callback)
+    // make onclick callback
+    if (!createProperties.id) {
+      // todo
+      createProperties.id = ""
+    }
+    if (onclick) {
+      wrapCallback(createProperties.id ?? "",
+        (callbackName: string) => {
+          createProperties.onclickCallback = callbackName;
+          return jsbridge('util.contextMenu.set', createProperties, callback);
+        },
+        callback
+      );
+    } else {
+      return jsbridge('util.contextMenu.set', createProperties, callback)
+    }
   }
 
   remove(

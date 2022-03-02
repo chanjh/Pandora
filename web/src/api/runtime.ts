@@ -19,6 +19,9 @@ interface InjectDetails {
 }
 
 export default class Runtime {
+  get id() {
+    return window.chrome.__pkg__.id;
+  }
   // todo: cannot use on content script
   getURL(path?: string) {
     // get html from package

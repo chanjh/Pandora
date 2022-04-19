@@ -4,8 +4,8 @@
 // - Remove
 // - update
 
-import wrapCallback from "gcjsbridge/src/callback_wrapper";
-import { jsbridge } from "gcjsbridge/src/invoker"
+import wrapCallback from "@pandola/bridge/src/callback_wrapper";
+import { jsbridge } from "@pandola/bridge/src/invoker"
 
 type ContextType = "all" | "page" | "frame" | "selection" | "link" | "editable" | "image" |
   "video" | "audio" | "launcher" | "browser_action" | "page_action" | "action"

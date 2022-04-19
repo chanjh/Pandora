@@ -1,5 +1,5 @@
-import { jsbridge } from "gcjsbridge/src/invoker";
-import invoker from "gcjsbridge/src/invoker";
+import { jsbridge } from "@pandola/bridge/src/invoker";
+import invoker from "@pandola/bridge/src/invoker";
 import MessageSender from "./msg_sender";
 enum RunAt {
 

@@ -1,5 +1,5 @@
 
-import Global from "gcjsbridge/src/global";
+import Global from "@pandola/bridge/src/global";
 import Chrome from "./api/chrome";
 
 declare global {

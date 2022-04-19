@@ -1,4 +1,4 @@
-import register from 'gcjsbridge/src/register';
+import register from '@pandola/bridge/src/register';
 import ClassProxy from '../no_such_method';
 import Bookmarks from './bookmarks';
 import ContextMenu from './context_menus';

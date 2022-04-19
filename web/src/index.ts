@@ -1,4 +1,4 @@
-import launcher from "gcjsbridge/src/launcher";
+import launcher from "@pandola/bridge/src/launcher";
 launcher();
 
 require("./api/chrome");

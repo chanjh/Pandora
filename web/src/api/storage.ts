@@ -1,4 +1,4 @@
-import { jsbridge } from "gcjsbridge/src/invoker";
+import { jsbridge } from "@pandola/bridge/src/invoker";
 
 export default class Storage {
   get local() {

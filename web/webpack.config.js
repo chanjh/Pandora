@@ -18,7 +18,7 @@ module.exports = {
   },
   output: {
     path: __dirname + '/build',
-    filename: 'chrome.js'
+    filename: 'pandora.js'
   },
   optimization: {
     minimize: true,

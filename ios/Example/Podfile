@@ -1,0 +1,7 @@
+platform :ios, '14.0'
+
+target 'PandoraExample' do
+  use_frameworks!
+  pod 'Pandora', :path=>'../'
+  pod 'GCWebContainer', :path=>'../../../GCWebContainer/'
+end

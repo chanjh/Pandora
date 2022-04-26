@@ -43,6 +43,8 @@ public struct Pandora {
     public var popupFilePath: URL? {
         if let popup = manifest.action?["default_popup"] as? String {
             return URL(string: "file://" + pdPath.relativePath + "/" + popup)
+        } else if let popup = manifest.pageAction?.popup {
+            return URL(string: "file://" + pdPath.relativePath + "/" + popup)
         }
         return nil
     }

@@ -44,7 +44,21 @@ class TabsService: PDBaseJSService, JSServiceHandler {
                 }
             }
         } else if message.serviceName == JSServiceType.queryTab.rawValue {
-            
+            if let params = message.params as? Dictionary<String, Any>,
+               let callback = message.callback {
+                let query = TabQueryInfo(params)
+                let tabs = PDManager.shared.delegate?.tabsManager?.query(query)
+                var jsArgument = "["
+                tabs?.forEach({ tab in
+                    let str = tab.toJSONString()
+                    jsArgument += str + ","
+                })
+                jsArgument.removeLast()
+                jsArgument += "]"
+                webView?.jsEngine?.callFunction(callback, arguments: [jsArgument], completion: { info, error in
+                    
+                })
+            }
         } else if message.serviceName == JSServiceType.tabSendMessage.rawValue {
             let tabId = params["tabId"] as? Int
             let runners = PDManager.shared.contentScriptRunners

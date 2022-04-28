@@ -4,6 +4,9 @@ export default class Storage {
   get local() {
     return new StorageArea('local');
   }
+  get sync() {
+    return new StorageArea('sync');
+  }
 }
 
 class StorageArea {

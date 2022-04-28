@@ -49,6 +49,11 @@ open class PDWebView: GCWebView {
             webViewConfiguration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
             webViewConfiguration.setValue(true, forKey: "allowUniversalAccessFromFileURLs")
         }
+        if case .popup(_) = type {
+            // 支持跨域请求
+            webViewConfiguration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
+            webViewConfiguration.setValue(true, forKey: "allowUniversalAccessFromFileURLs")
+        }
         let schemeHandler: [String: WKURLSchemeHandler] = [PDURLSchemeHandler.scheme: PDURLSchemeHandler()]
         schemeHandler.forEach({ (key, value) in
             webViewConfiguration.setURLSchemeHandler(value, forURLScheme: key)
@@ -97,6 +102,7 @@ open class PDWebView: GCWebView {
         jsServiceManager?.register(handler: LocalStorageService(self, ui: ui, model: model))
         jsServiceManager?.register(handler: BookmarkService(self, ui: ui, model: model))
         jsServiceManager?.register(handler: ContextMenuService(self, ui: ui, model: model))
+        jsServiceManager?.register(handler: DownloadService(self, ui: ui, model: model))
     }
 }
 

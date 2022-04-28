@@ -22,5 +22,6 @@ Pandora
   s.dependency 'Zip', '~> 2.1'
   s.dependency 'SnapKit', '~> 5.0.0'
   s.dependency 'GCWebContainer', '~> 0.1.0'
+  s.dependency 'Tiercel'
   
 end

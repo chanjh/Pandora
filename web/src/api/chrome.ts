@@ -8,6 +8,7 @@ import Storage from './storage';
 import Tabs from './tabs';
 import Command from './commands';
 import PageAction from './page_action';
+import Downloads from './downloads';
 
 export default class Chrome {
   __pkg__: any;
@@ -43,6 +44,10 @@ export default class Chrome {
 
   get pageAction() {
     return ClassProxy(new PageAction());
+  }
+
+  get downloads() {
+    return ClassProxy(new Downloads());
   }
 
   __noSuchMethod__(name: any, args: any) {

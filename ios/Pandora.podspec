@@ -17,7 +17,7 @@ Pandora
   s.swift_versions = '5.0'
 
   s.source_files = 'Pandora/**/*{swift,h,m}'
-  s.resource_bundles = { 'Pandora' => ['Pandora/Resources/*'] }
+  s.resource_bundles = { 'Pandora' => ['Pandora/Resources/*'], 'Extensions' => ['Pandora/Extensions/*.zip'] }
 
   s.dependency 'Zip', '~> 2.1'
   s.dependency 'SnapKit', '~> 5.0.0'

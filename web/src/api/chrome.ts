@@ -9,6 +9,7 @@ import Tabs from './tabs';
 import Command from './commands';
 import PageAction from './page_action';
 import Downloads from './downloads';
+import BrowserAction from './browser_action';
 
 export default class Chrome {
   __pkg__: any;
@@ -20,6 +21,10 @@ export default class Chrome {
 
   get tabs() {
     return ClassProxy(new Tabs());
+  }
+
+  get browserAction() {
+    return ClassProxy(new BrowserAction());
   }
 
   get bookmarks() {

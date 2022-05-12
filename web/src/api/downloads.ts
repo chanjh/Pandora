@@ -3,12 +3,13 @@ import { jsbridge } from "@pandola/bridge/src/invoker";
 export default class Downloads {
   async download(options: DownloadOptions,
     callback?: DownloadCallback) {
+    const api = 'downloads.download'
     if (options.url.startsWith("blob:")) {
       const base64 = await blob2Base64(options.url);
       const arg = Object.assign(options, { base64 });
-      return jsbridge('downloads.download', arg, callback);
+      return jsbridge(api, arg, callback);
     }
-    return jsbridge('downloads.download', options, callback);
+    return jsbridge(api, options, callback);
   }
 }
 

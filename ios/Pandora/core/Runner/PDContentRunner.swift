@@ -33,6 +33,7 @@ class PDContentRunner {
                 _injectManifest(pandora)
                 if let contentScripts = pandora.manifest.contentScripts {
                     contentScripts.forEach { scriptInfo in
+                        // - Content Script
                         scriptInfo.js?.forEach({ js in
                             if let content = loader.fileContent(at: js) {
                                 let userScript = WKUserScript(source: content,
@@ -42,10 +43,35 @@ class PDContentRunner {
                                 webView?.addUserScript(userScript: userScript)
                             }
                         })
+                        // - Content CSS
+                        scriptInfo.css?.forEach({ css in
+                            if let script = loader.fileContent(at: css) {
+                                _injectCSS(script, at: contentWorld)
+                            }
+                        })
                     }
                 }
             }
         }
+    }
+    
+    private func _injectCSS(_ css: String, at contentWorld: WKContentWorld) {
+        guard let plainData = css.data(using: .utf8)?.base64EncodedString(options: []) else {
+            return;
+        }
+        let cssStyle = """
+            javascript:(function() {
+            var parent = document.getElementsByTagName('head').item(0);
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.innerHTML = window.atob('\(plainData)');
+            parent.appendChild(style)})()
+        """
+        let userScript = WKUserScript(source: cssStyle,
+                                      injectionTime: .atDocumentEnd,
+                                      forMainFrameOnly: true,
+                                      in: contentWorld)
+        webView?.addUserScript(userScript: userScript)
     }
     
     private func _injectManifest(_ pandora: Pandora) {

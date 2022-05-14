@@ -31,16 +31,18 @@ extension PDFileManager {
         guard let filePath = zipPath else {
             return;
         }
-        if _findIfCompleteSetup(source: filePath.path) {
-            return;
-        }
         let document = try? FileManager.default.url(for: .documentDirectory,
                                                           in: .userDomainMask,
                                                           appropriateFor: nil,
                                                           create: false)
-        var uuid = UUID().uuidString
+        var uuid = String(filePath.lastPathComponent.split(separator: ".", maxSplits: 1, omittingEmptySubsequences: false)[0])
         uuid.removeAll { $0 == "-" }
-        if let destination = URL(string: "\(document?.path ?? "")/\(unzipPath)/\(uuid)"),
+        let destinationStr = "\(document?.path ?? "")/\(unzipPath)/\(uuid)"
+        if (FileManager.default.fileExists(atPath: destinationStr)) {
+            return;
+        }
+        
+        if let destination = URL( string:destinationStr),
            ((try? Zip.unzipFile(filePath,
                                 destination: destination,
                                 overwrite: true,

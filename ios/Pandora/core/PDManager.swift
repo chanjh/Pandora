@@ -114,10 +114,6 @@ public class PDManager {
     }
     
     private func _loadInnerExtension() {
-        let key = "k_Pandora_DidSetupAllBundleApp_key"
-        if UserDefaults.standard.bool(forKey: key) {
-            return
-        }
         if let bundlePath = Bundle(for: Self.self).path(forResource: "Extensions", ofType: "bundle"),
            let bundle = Bundle(path: bundlePath),
            let files = files(in: bundle.bundleURL) {
@@ -125,7 +121,6 @@ public class PDManager {
                 PDFileManager.setupPandora(zipPath: bundle.url(forResource: fileName, withExtension: nil))
             }
         }
-        UserDefaults.standard.set(true, forKey: key)
     }
     
     private func files(in directory: URL) -> [String]? {

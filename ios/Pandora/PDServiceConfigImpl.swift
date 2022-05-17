@@ -20,4 +20,5 @@ extension PDServiceConfigImpl: WebContainerUIConfig,
                                WebContainerModelConfig {
     var webView: GCWebView { pdWebView }
     var navigator: WebContainerNavigator? { PDManager.shared.delegate?.runnerDelegate }
+    var cookie: WebContainerCookieHandler? { WebContainerCookieImpl.shared }
 }

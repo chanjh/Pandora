@@ -21,13 +21,17 @@ class CookiesService: PDBaseJSService, JSServiceHandler {
                 return
             }
             model?.cookie?.get(name: name, url: url, { [weak self] in
-                guard let callback = message.callback, let dict = $0?.toMap() else {
-                    return
+                if let cookie = $0 {
+                    guard let callback = message.callback, let dict = $0?.toMap() else {
+                        return
+                    }
+                    self?.webView?.configuration.websiteDataStore.httpCookieStore.setCookie(cookie, completionHandler: {  [weak self] in
+                            self?.webView?.jsEngine?.callFunction(callback,
+                                                                  params: dict,
+                                                                  in: nil,
+                                                                  in: message.contentWorld, completion: nil)
+                    })
                 }
-                self?.webView?.jsEngine?.callFunction(callback,
-                                                      params: dict,
-                                                      in: nil,
-                                                      in: message.contentWorld, completion: nil)
             })
         }
     }

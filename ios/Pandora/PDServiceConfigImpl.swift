@@ -33,6 +33,6 @@ extension PandoraWebUIConfig {
 }
 
 public protocol PandoraActionBarHandler {
-    func setTitle(_ text: String)
-    func setIcon(_ base64: String)
+    func setTitle(_ text: String, pandoraId: String)
+    func setIcon(_ base64: String, pandoraId: String)
 }

@@ -18,10 +18,12 @@ class BrowserActionService: PDBaseJSService, JSServiceHandler {
             return
         }
         if message.serviceName == JSServiceType.browserActionSetTitle.rawValue,
-            let title = params["title"] as? String {
-            pdUI?.actionBar?.setTitle(title)
-        } else if message.serviceName == JSServiceType.browserActionSetIcon.rawValue {
-            pdUI?.actionBar?.setTitle("")
+           let title = params["title"] as? String,
+           let id = findSenderId(on: message) {
+            pdUI?.actionBar?.setTitle(title, pandoraId: id)
+        } else if message.serviceName == JSServiceType.browserActionSetIcon.rawValue,
+                  let id = findSenderId(on: message) {
+            pdUI?.actionBar?.setTitle("", pandoraId: id)
         }
         
     }

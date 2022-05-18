@@ -106,6 +106,7 @@ open class PDWebView: GCWebView {
         jsServiceManager?.register(handler: ContextMenuService(self, ui: ui, model: model))
         jsServiceManager?.register(handler: DownloadService(self, ui: ui, model: model))
         jsServiceManager?.register(handler: CookiesService(self, ui: ui, model: model))
+        jsServiceManager?.register(handler: BrowserActionService(self, ui: ui, model: model))
     }
 }
 

@@ -1,0 +1,33 @@
+//
+//  BrowserActionService.swift
+//  GCWebContainer
+//
+//  Created by 陈嘉豪 on 2022/5/18.
+//
+
+import Foundation
+import GCWebContainer
+
+class BrowserActionService: PDBaseJSService, JSServiceHandler {
+    var handleServices: [JSServiceType] {
+        return [.browserActionSetTitle, .browserActionSetIcon]
+    }
+    
+    func handle(message: JSServiceMessageInfo) {
+        guard let params = message.params as? [String: Any] else {
+            return
+        }
+        if message.serviceName == JSServiceType.browserActionSetTitle.rawValue,
+            let title = params["title"] as? String {
+            pdUI?.actionBar?.setTitle(title)
+        } else if message.serviceName == JSServiceType.browserActionSetIcon.rawValue {
+            pdUI?.actionBar?.setTitle("")
+        }
+        
+    }
+
+}
+extension JSServiceType {
+    static let browserActionSetTitle    = JSServiceType("browserAction.setTitle")
+    static let browserActionSetIcon = JSServiceType("browserAction.setIcon")
+}

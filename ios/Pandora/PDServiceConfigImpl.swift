@@ -16,9 +16,23 @@ class PDServiceConfigImpl {
     }
 }
 
-extension PDServiceConfigImpl: WebContainerUIConfig,
+extension PDServiceConfigImpl: PandoraWebUIConfig,
                                WebContainerModelConfig {
     var webView: GCWebView { pdWebView }
     var navigator: WebContainerNavigator? { PDManager.shared.delegate?.runnerDelegate }
     var cookie: WebContainerCookieHandler? { WebContainerCookieImpl.shared }
+    var actionBar: PandoraActionBarHandler? { PDManager.shared.delegate?.actionBarManager }
+}
+
+protocol PandoraWebUIConfig: WebContainerUIConfig {
+    var actionBar: PandoraActionBarHandler? { get }
+}
+
+extension PandoraWebUIConfig {
+    var actionBar: PandoraActionBarHandler? { nil }
+}
+
+public protocol PandoraActionBarHandler {
+    func setTitle(_ text: String)
+    func setIcon(_ base64: String)
 }

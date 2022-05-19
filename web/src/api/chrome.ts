@@ -10,6 +10,7 @@ import Command from './commands';
 import PageAction from './page_action';
 import Downloads from './downloads';
 import BrowserAction from './browser_action';
+import Cookies from './cookies';
 
 export default class Chrome {
   __pkg__: any;
@@ -29,6 +30,10 @@ export default class Chrome {
 
   get bookmarks() {
     return ClassProxy(new Bookmarks());
+  }
+
+  get cookies() {
+    return ClassProxy(new Cookies());
   }
 
   get contextMenus() {

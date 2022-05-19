@@ -9,6 +9,8 @@ import Foundation
 import GCWebContainer
 
 class PDBaseJSService: BaseJSService {
+    var pdUI: PandoraWebUIConfig? { ui as? PandoraWebUIConfig }
+    
     override
     func findSenderId(on message: JSServiceMessageInfo) -> String? {
         if let pdWebView = (self.webView as? PDWebView) {

@@ -14,6 +14,7 @@ public protocol PandoraDelegate {
     var storage: IPandoraStorage? { get }
 //    var contextMenu: IPandoraContextMenu? { get }
     var tabsManager: IPandoraTabsManager? { get }
+    var actionBarManager: IPandoraActionBarManger? { get }
 }
 
 public extension PandoraDelegate {
@@ -22,11 +23,14 @@ public extension PandoraDelegate {
     var storage: IPandoraStorage? { nil }
 //    var contextMenu: IPandoraContextMenu? { nil }
     var tabsManager: IPandoraTabsManager? { nil }
+    var actionBarManager: IPandoraActionBarManger? { nil }
 }
 
 public protocol PandoraRunnerDelegate: WebContainerNavigator { }
 
 //protocol IPandoraContextMenu { }
+
+public protocol IPandoraActionBarManger: PandoraActionBarHandler { }
 
 public protocol IPandoraTabsManager {
     var pool: [PDWebView] { get }

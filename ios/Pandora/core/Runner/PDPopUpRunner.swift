@@ -18,7 +18,6 @@ class PDPopUpRunner: NSObject {
     }
     
     func run() -> PDWebView {
-        // todo 这里 UI model 是空
         let pageWebView = PDWebView(frame: .zero,
                                     type: .popup(pandora.id))
         let serviceConfig = PDServiceConfigImpl(pageWebView)

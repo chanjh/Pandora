@@ -13,6 +13,13 @@ public enum PDWebViewType {
     case browserAction(String);
     case background(String);
     case popup(String);
+    
+    var isContent: Bool {
+        switch self {
+        case .content: return true
+        default: return false
+        }
+    }
 }
 
 open class PDWebView: GCWebView {
@@ -44,12 +51,7 @@ open class PDWebView: GCWebView {
         let webViewConfiguration = WKWebViewConfiguration()
         let contentController = WKUserContentController()
         webViewConfiguration.userContentController = contentController
-        if case .browserAction(_) = type {
-            // 支持跨域请求
-            webViewConfiguration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
-            webViewConfiguration.setValue(true, forKey: "allowUniversalAccessFromFileURLs")
-        }
-        if case .popup(_) = type {
+        if !type.isContent {
             // 支持跨域请求
             webViewConfiguration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
             webViewConfiguration.setValue(true, forKey: "allowUniversalAccessFromFileURLs")
@@ -103,6 +105,8 @@ open class PDWebView: GCWebView {
         jsServiceManager?.register(handler: BookmarkService(self, ui: ui, model: model))
         jsServiceManager?.register(handler: ContextMenuService(self, ui: ui, model: model))
         jsServiceManager?.register(handler: DownloadService(self, ui: ui, model: model))
+        jsServiceManager?.register(handler: CookiesService(self, ui: ui, model: model))
+        jsServiceManager?.register(handler: BrowserActionService(self, ui: ui, model: model))
     }
 }
 

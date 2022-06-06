@@ -19,6 +19,9 @@ Pandora 灵活使用了 WebKit 提供的 JavaScript 运行时（基于 JSCore）
 
 ![](https://github.com/chanjh/Pandora/blob/main/images/dependency.png?raw=true)
 
+## Demo
+
+
 ## Contributing
 Pandora 是一个 Web+iOS 的框架，同时包含了 Web（TS）和 iOS（Swift）两端代码。为 Pandora 贡献你的能力吧！你可以：
 
@@ -26,3 +29,6 @@ Pandora 是一个 Web+iOS 的框架，同时包含了 Web（TS）和 iOS（Swift
 2. 修复已知 Bug
 3. 添加更多实用功能
 4. 发现 Bug，提交 issue
+
+## License
+Pandora is released under the MIT license. See LICENSE for details.

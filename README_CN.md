@@ -1,5 +1,6 @@
 # Pandora
-![](https://raw.githubusercontent.com/chanjh/Pandora/master/images/logo.png)
+![](https://github.com/chanjh/Pandora/blob/main/images/logo.png?raw=true)
+
 
 ## What is Pandora
 **Pandora** 是让 iOS 应用可以完整运行 Chrome Extension 的框架。
@@ -16,7 +17,7 @@ Web on App 是一个非常吸引人的话题，它是一个探讨 Web 的灵活�
 ## How Pandora works
 Pandora 灵活使用了 WebKit 提供的 JavaScript 运行时（基于 JSCore），搭建了 JS 和 App 之间的通讯桥，模拟了 Browser Extension 的运行机制。下面是 Pandora 的一张大概运行图
 
-![](https://raw.githubusercontent.com/chanjh/Pandora/master/images/framework.png)
+![](https://github.com/chanjh/Pandora/blob/main/images/framework.png?raw=true)
 
 ## Contributing
 Pandora 是一个 Web+iOS 的框架，同时包含了 Web（TS）和 iOS（Swift）两端代码。

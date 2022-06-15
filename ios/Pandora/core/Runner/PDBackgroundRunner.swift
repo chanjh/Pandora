@@ -32,7 +32,7 @@ public class PDBackgroundRunner: NSObject {
         _runWebView()
     }
     
-    func _fireOnInstalledEvent() {
+    func fireOnInstalledEvent() {
         let key = "k_Pandora_DidLoadedPandoraProject_key"
         var list = UserDefaults.standard.array(forKey: key) as? [String] ?? []
         if !list.contains(where: { $0 == "\(pandora.id)-\(pandora.manifest.version)" }) {

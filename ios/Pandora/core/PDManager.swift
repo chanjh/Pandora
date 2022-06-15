@@ -118,7 +118,7 @@ public class PDManager {
            let bundle = Bundle(path: bundlePath),
            let files = files(in: bundle.bundleURL) {
             files.forEach { fileName in
-                PDFileManager.setupPandora(zipPath: bundle.url(forResource: fileName, withExtension: nil))
+                PDFileManager.installPandora(zipPath: bundle.url(forResource: fileName, withExtension: nil))
             }
         }
     }

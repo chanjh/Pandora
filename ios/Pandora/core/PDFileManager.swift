@@ -27,7 +27,7 @@ extension PDFileManager {
 }
 // setup
 extension PDFileManager {
-    public static func setupPandora(zipPath: URL?) {
+    public static func installPandora(zipPath: URL?) {
         guard let filePath = zipPath else {
             return;
         }
@@ -52,6 +52,7 @@ extension PDFileManager {
             if let pandora = PDManager.shared.loadPandora(path: destination, id: uuid) {
                 let runner = PDManager.shared.makeBackgroundRunner(pandora)
                 runner.run()
+                runner.fireOnInstalledEvent()
                 _didCompleteSetup(uuid: uuid, pandora: pandora, source: filePath.path)
             } else {
                 try? FileManager.default.removeItem(atPath: destination.path)

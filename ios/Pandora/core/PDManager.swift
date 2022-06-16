@@ -13,6 +13,7 @@ public class PDManager {
     public static let shared = PDManager();
     private(set) var delegate: PandoraDelegate? = nil
     private var pandoraList: [Pandora] = [];
+    public private(set) var newTabUrl: String?
     
     public var pandoras: [Pandora] {
         return loaders.compactMap { return $0.pandora }
@@ -33,9 +34,18 @@ public class PDManager {
         loaders.append(loader)
         if let pandora = loader.loadSync() {
 //            pandoraList.append(contentsOf: pandoras)
+            _setNewTabIfNeed(pandora)
             return pandora
         }
         return nil
+    }
+    
+    private func _setNewTabIfNeed(_ pandora: Pandora) {
+        let manifest = pandora.manifest.raw
+        if let urlOverrides = manifest?["chrome_url_overrides"] as? Dictionary<String, Any>,
+           let newTab = urlOverrides["newtab"] as? String {
+            newTabUrl = "chrome-extension://\(pandora.id)/\(newTab)"
+        }
     }
     
     // 把所有已经解压的扩展，加载到内容里
@@ -44,9 +54,7 @@ public class PDManager {
         files.forEach { filePath in
             if let url = URL(string: filePath),
                 !loaders.contains(where: { $0.loadSync()?.id == url.lastPathComponent }) {
-                let loader = PDLoader(url, id: url.lastPathComponent)
-                loaders.append(loader)
-                if let pandora = loader.loadSync() {
+                if let pandora = loadPandora(path: url, id: url.lastPathComponent) {
                     let runner = makeBackgroundRunner(pandora)
                     runner.run()
                 }
@@ -118,7 +126,7 @@ public class PDManager {
            let bundle = Bundle(path: bundlePath),
            let files = files(in: bundle.bundleURL) {
             files.forEach { fileName in
-                PDFileManager.setupPandora(zipPath: bundle.url(forResource: fileName, withExtension: nil))
+                PDFileManager.installPandora(zipPath: bundle.url(forResource: fileName, withExtension: nil))
             }
         }
     }

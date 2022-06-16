@@ -61,6 +61,11 @@ type QueryTabCallback = (result: Tab[]) => void;
 
 export default class Tabs {
   create(createProperties: TabCreateProperties, callback?: CreateTabCallback) {
+    const manifest = window.chrome.__pkg__.manifest;
+    const newtab = manifest['chrome_url_overrides']?.newtab
+    if (createProperties.url === newtab) {
+      createProperties.url = `chrome-extension://${window.chrome.__pkg__.id}/${newtab}`
+    }
     return jsbridge('runtime.tabs.create', createProperties, callback)
   }
   remove(

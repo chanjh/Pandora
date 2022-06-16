@@ -32,13 +32,19 @@ public class PDBackgroundRunner: NSObject {
         _runWebView()
     }
     
-    func _fireOnInstalledEvent() {
+    func fireOnInstalledEvent() {
         let key = "k_Pandora_DidLoadedPandoraProject_key"
         var list = UserDefaults.standard.array(forKey: key) as? [String] ?? []
         if !list.contains(where: { $0 == "\(pandora.id)-\(pandora.manifest.version)" }) {
             list.append("\(pandora.id)-\(pandora.manifest.version)")
             UserDefaults.standard.set(list, forKey: key)
             _onInstall()
+        }
+        
+        let manifest = pandora.manifest.raw
+        if let urlOverrides = manifest?["chrome_url_overrides"] as? Dictionary<String, Any>,
+           let newTab = urlOverrides["newtab"] as? String {
+            // set new tab
         }
     }
     

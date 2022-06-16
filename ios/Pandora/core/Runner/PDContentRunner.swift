@@ -8,9 +8,9 @@
 import WebKit
 import GCWebContainer
 
-class PDContentRunner {
+public class PDContentRunner {
     weak var webView: GCWebView?
-    private(set) var pandoras: [Pandora] = []
+    public private(set) var pandoras: [Pandora] = []
     
     init(_ webView: GCWebView) {
         self.webView = webView

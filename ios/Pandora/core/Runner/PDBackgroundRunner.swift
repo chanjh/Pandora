@@ -40,6 +40,12 @@ public class PDBackgroundRunner: NSObject {
             UserDefaults.standard.set(list, forKey: key)
             _onInstall()
         }
+        
+        let manifest = pandora.manifest.raw
+        if let urlOverrides = manifest?["chrome_url_overrides"] as? Dictionary<String, Any>,
+           let newTab = urlOverrides["newtab"] as? String {
+            // set new tab
+        }
     }
     
     private func _prepareBackgroundWebView() {

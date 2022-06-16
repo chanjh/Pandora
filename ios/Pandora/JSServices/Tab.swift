@@ -57,7 +57,7 @@ public class TabRemoveInfo: NSObject {
     }
 }
 public class TabChangeInfo: NSObject {
-    public let audible: Bool? = nil
+    public var audible: Bool? = nil
     public let autoDiscardable: Bool? = nil
     public let discarded: Bool? = nil
     public let favIconUrl: String? = nil

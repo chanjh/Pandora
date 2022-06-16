@@ -24,7 +24,7 @@ public enum PDWebViewType {
 
 open class PDWebView: GCWebView {
     let type: PDWebViewType;
-    private(set) var contentScriptRunner: PDContentRunner?
+    public private(set) var contentScriptRunner: PDContentRunner?
     
     public init(frame: CGRect = .zero,
                 type: PDWebViewType = .content,

@@ -1,4 +1,4 @@
-import { jsbridge } from "@pandola/bridge/src/invoker";
+import { jsbridge } from "@pandola/bridge";
 import { VoidCallback } from "./define";
 
 export default class BrowserAction {

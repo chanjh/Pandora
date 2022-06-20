@@ -1,4 +1,4 @@
-import { jsbridge } from "@pandola/bridge/src/invoker";
+import { jsbridge } from "@pandola/bridge";
 
 export default class Storage {
   get local() {

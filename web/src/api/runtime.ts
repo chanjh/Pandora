@@ -1,5 +1,4 @@
-import { jsbridge } from "@pandola/bridge/src/invoker";
-import invoker from "@pandola/bridge/src/invoker";
+import { jsbridge, invoker } from "@pandola/bridge";
 import MessageSender from "./msg_sender";
 enum RunAt {
 

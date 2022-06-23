@@ -1,4 +1,4 @@
-import launcher from "@pandola/bridge/src/launcher";
+import { launcher } from "@pandola/bridge";
 launcher();
 
 require("./api/chrome");

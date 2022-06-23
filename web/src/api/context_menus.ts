@@ -4,8 +4,7 @@
 // - Remove
 // - update
 
-import wrapCallback from "@pandola/bridge/src/callback_wrapper";
-import { jsbridge } from "@pandola/bridge/src/invoker"
+import { jsbridge, wrapCallback } from "@pandola/bridge"
 
 type ContextType = "all" | "page" | "frame" | "selection" | "link" | "editable" | "image" |
   "video" | "audio" | "launcher" | "browser_action" | "page_action" | "action"

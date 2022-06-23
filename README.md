@@ -28,6 +28,8 @@ Pandora 之上可以依据需要封装使用场景；Demo 以 [BrowserKit](https
 ## Demo
 👉 [基于 Pandora 的简易浏览器](https://github.com/chanjh/GCWebContainerDemo)
 
+> 你需要给电脑安装 [Git LFS](https://git-lfs.github.com/) 来下载 Pandora
+
 ## Contributing
 Pandora 是一个 Web+iOS 的框架，同时包含了 Web（TS）和 iOS（Swift）两端代码。为 Pandora 贡献你的能力吧！你可以：
 

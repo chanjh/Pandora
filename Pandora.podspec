@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.summary          = 'Pandora'
 
   s.description      = <<-DESC
-Pandora
+Pandora allows WKWebView to run original Chrome Extension
                        DESC
 
   s.homepage         = 'https://github.com/chanjh/Pandora'
@@ -21,7 +21,7 @@ Pandora
 
   s.dependency 'Zip', '~> 2.1'
   s.dependency 'SnapKit', '~> 5.0.0'
-  s.dependency 'GCWebContainer', '~> 0.1.0'
+  s.dependency 'GCWebContainer', '~> 0.1.5'
   s.dependency 'Tiercel'
   
 end

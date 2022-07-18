@@ -148,4 +148,14 @@ extension PDManager {
         }
         return scripts
     }
+    
+    static var pandoraJS: String? {
+        get {
+            if let bundlePath = Bundle(for: Self.self).path(forResource: "Pandora", ofType: "bundle"),
+               let path = Bundle(path: bundlePath)?.path(forResource: "pandora", ofType: "js") {
+                return try? String(contentsOfFile: path)
+            }
+            return nil
+        }
+    }
 }

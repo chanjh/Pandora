@@ -72,26 +72,11 @@ open class PDWebView: GCWebView {
         super.onInit()
         actionHandler.addObserver(self)
         _registerJSHandler()
-        if case .browserAction(_) = type {
-            
-        } else {
-            _injectAllContentJS()
-        }
+        _injectAllContentJSIfNeed()
     }
-    
-    func pd_addChromeBridge() {
-        if let bundlePath = Bundle(for: Self.self).path(forResource: "Pandora", ofType: "bundle"),
-           let path = Bundle(path: bundlePath)?.path(forResource: "pandora", ofType: "js"),
-           let chrome = try? String(contentsOfFile: path) {
-            let userScript = WKUserScript(source: chrome,
-                                          injectionTime: .atDocumentStart,
-                                          forMainFrameOnly: true)
-            configuration.userContentController.addUserScript(userScript)
-        }
-    }
-    
-    private func _injectAllContentJS() {
-//        pd_addChromeBridge()
+
+    // Content
+    private func _injectAllContentJSIfNeed() {
         if case .content = type {
             contentScriptRunner = PDManager.shared.makeContentRunner(self)
             contentScriptRunner?.run()

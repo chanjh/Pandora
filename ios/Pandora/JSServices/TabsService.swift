@@ -60,7 +60,7 @@ class TabsService: PDBaseJSService, JSServiceHandler {
                 })
             }
         } else if message.serviceName == JSServiceType.tabSendMessage.rawValue {
-            let tabId = params["tabId"] as? Int
+            let tabId = Int(params["tabId"] as? String ?? "")
             let runners = PDManager.shared.contentScriptRunners
             runners.forEach { runner in
                 if let tabId = tabId,

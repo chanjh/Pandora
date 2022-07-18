@@ -89,14 +89,11 @@ public class PDContentRunner {
     }
     
     private func _injectChromeBridge(_ contentWorld: WKContentWorld) {
-        if let bundlePath = Bundle(for: Self.self).path(forResource: "Pandora", ofType: "bundle"),
-           let path = Bundle(path: bundlePath)?.path(forResource: "pandora", ofType: "js"),
-           let chrome = try? String(contentsOfFile: path) {
+        if let chrome = PDManager.pandoraJS {
             let userScript = WKUserScript(source: chrome,
                                           injectionTime: .atDocumentStart,
                                           forMainFrameOnly: true,
                                           in: contentWorld)
-            
             webView?.addUserScript(userScript: userScript)
         }
     }

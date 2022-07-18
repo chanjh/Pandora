@@ -97,13 +97,11 @@ public class PDBackgroundRunner: NSObject {
     }
     
     private func _injectChromeBridge() {
-        if let bundlePath = Bundle(for: Self.self).path(forResource: "Pandora", ofType: "bundle"),
-           let path = Bundle(path: bundlePath)?.path(forResource: "pandora", ofType: "js"),
-           let chrome = try? String(contentsOfFile: path) {
+        if let chrome = PDManager.pandoraJS {
             let userScript = WKUserScript(source: chrome,
                                           injectionTime: .atDocumentStart,
                                           forMainFrameOnly: true)
-            webView?.addUserScript(userScript: userScript)
+            webView?.configuration.userContentController.addUserScript(userScript)
         }
     }
 }

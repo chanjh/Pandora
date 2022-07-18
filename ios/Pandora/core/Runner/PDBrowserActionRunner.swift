@@ -19,7 +19,7 @@ class PDBrowserActionRunner: NSObject {
     }
     
     func run() {
-        webView?.pd_addChromeBridge()
+        _injectChromeBridge()
         _injectManifest()
     }
     
@@ -33,5 +33,14 @@ class PDBrowserActionRunner: NSObject {
                                       injectionTime: .atDocumentStart,
                                       forMainFrameOnly: true)
         webView?.addUserScript(userScript: userScript)
+    }
+    
+    private func _injectChromeBridge() {
+        if let chrome = PDManager.pandoraJS {
+            let userScript = WKUserScript(source: chrome,
+                                          injectionTime: .atDocumentStart,
+                                          forMainFrameOnly: true)
+            webView?.configuration.userContentController.addUserScript(userScript)
+        }
     }
 }

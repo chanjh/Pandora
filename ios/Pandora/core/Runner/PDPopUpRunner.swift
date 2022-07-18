@@ -26,8 +26,17 @@ class PDPopUpRunner: NSObject {
         pageWebView.model = serviceConfig
         pageWebView.ui = serviceConfig
         pageWebView.actionHandler.addObserver(self)
-        pageWebView.pd_addChromeBridge()
+        _injectChromeBridge(pageWebView)
         return pageWebView
+    }
+    
+    private func _injectChromeBridge(_ webView: PDWebView) {
+        if let chrome = PDManager.pandoraJS {
+            let userScript = WKUserScript(source: chrome,
+                                          injectionTime: .atDocumentStart,
+                                          forMainFrameOnly: true)
+            webView.configuration.userContentController.addUserScript(userScript)
+        }
     }
 }
 

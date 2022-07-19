@@ -23,14 +23,17 @@ public enum PDWebViewType {
 }
 
 open class PDWebView: GCWebView {
-    let type: PDWebViewType;
-    public private(set) var contentScriptRunner: PDContentRunner?
+    var type: PDWebViewType {
+        get { return _type }
+    }
+    private var _type: PDWebViewType;
+    public private(set) weak var contentScriptRunner: PDContentRunner?
     
     public init(frame: CGRect = .zero,
                 type: PDWebViewType = .content,
                 model: WebContainerModelConfig? = nil,
                 ui: WebContainerUIConfig? = nil) {
-        self.type = type
+        self._type = type
         super.init(frame: frame,
                    model: model,
                    ui: ui,
@@ -40,7 +43,7 @@ open class PDWebView: GCWebView {
     init(frame: CGRect = .zero,
          type: PDWebViewType = .content,
          serviceConfig: PDServiceConfigImpl) {
-        self.type = type
+        self._type = type
         super.init(frame: frame,
                    model: serviceConfig,
                    ui: serviceConfig,
@@ -98,8 +101,34 @@ open class PDWebView: GCWebView {
 extension PDWebView {
     open override
     func load(_ request: URLRequest) -> WKNavigation? {
-        if let url = request.url,
-           url.scheme == PDURLSchemeHandler.scheme {
+        if let currentUrl = url, let newUrl = request.url {
+            if currentUrl.isExtensionUrl != newUrl.isExtensionUrl {
+                // Clear
+                configuration.userContentController.removeAllUserScripts()
+                configuration.userContentController.removeAllScriptMessageHandlers()
+                if newUrl.isExtensionUrl {
+                    if let res = _loadBrowserAction(newUrl) {
+                        contentScriptRunner = nil
+                        willLoadRequest()
+                        return res
+                    }
+                } else {
+                    _loadContent()
+                }
+            }
+        }
+        willLoadRequest()
+        return super.load(request)
+    }
+    
+    private func _loadContent() {
+        contentScriptRunner = PDManager.shared.makeContentRunner(self)
+        contentScriptRunner?.run()
+        _type = .content
+    }
+    
+    private func _loadBrowserAction(_ url: URL?) -> WKNavigation? {
+        if let url = url, url.scheme == PDURLSchemeHandler.scheme {
             let document = try? FileManager.default.url(for: .documentDirectory,
                                                            in: .userDomainMask,
                                                            appropriateFor: nil,
@@ -110,13 +139,12 @@ extension PDWebView {
                let pandora = PDManager.shared.pandoras.first(where: { $0.id == url.host }) {
                 let runner = PDManager.shared.makeBrowserActionRunner(pandora: pandora,
                                                                       webView: self)
+                _type = .browserAction(pandora.id)
                 runner.run()
-                willLoadRequest()
                 return loadFileURL(fileUrl, allowingReadAccessTo: unzipUrl)
             }
         }
-        willLoadRequest()
-        return super.load(request)
+        return nil
     }
 }
 

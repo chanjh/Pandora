@@ -68,7 +68,7 @@ public class PDManager {
         // todo: 上次解压失败的，重新开始解压
     }
     
-    func makeBackgroundRunner(_ pandora: Pandora) -> PDBackgroundRunner {
+    public func makeBackgroundRunner(_ pandora: Pandora) -> PDBackgroundRunner {
 //        if let runner = runners.first(where: { $0.pandora.id == pandora.id }) {
 //            return runner
 //        }
@@ -77,7 +77,7 @@ public class PDManager {
         return runner
     }
     
-    func makePopUpRunner(_ pandora: Pandora) -> PDPopUpRunner {
+    public func makePopUpRunner(_ pandora: Pandora) -> PDPopUpRunner {
 //        if let runner = runners.first(where: { $0.pandora.id == pandora.id }) {
 //            return runner
 //        }
@@ -86,13 +86,13 @@ public class PDManager {
         return runner
     }
     
-    func makeContentRunner(_ webView: GCWebView) -> PDContentRunner {
+    public func makeContentRunner(_ webView: GCWebView) -> PDContentRunner {
         let runner = PDContentRunner(webView)
         contentScriptRunners.append(runner)
         return runner
     }
     
-    func makeBrowserActionRunner(pandora: Pandora, webView: PDWebView?) -> PDBrowserActionRunner {
+    public func makeBrowserActionRunner(pandora: Pandora, webView: PDWebView?) -> PDBrowserActionRunner {
         let runner = PDBrowserActionRunner(pandora: pandora,
                                            webView: webView)
         browserActionRunner.append(runner)

@@ -8,7 +8,7 @@
 import WebKit
 import GCWebContainer
 
-class PDPopUpRunner: NSObject {
+public class PDPopUpRunner: NSObject {
     private(set) var pandora: Pandora
     private(set) var webView: PDWebView?
     private(set) var serviceConfig: PDServiceConfigImpl?
@@ -42,7 +42,7 @@ class PDPopUpRunner: NSObject {
 
 
 extension PDPopUpRunner: GCWebViewActionObserver {
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         let data = ["type": "BACKGROUND", "id": pandora.id, "manifest": (pandora.manifest.raw ?? [:])] as [String : Any];
         let injectInfoScript = "window.chrome.__loader__";
         (webView as? PDWebView)?.jsEngine?.callFunction(injectInfoScript, params: data as [String : Any], completion: nil)

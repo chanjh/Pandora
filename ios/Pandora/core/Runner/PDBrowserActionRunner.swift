@@ -8,7 +8,7 @@
 import WebKit
 import GCWebContainer
 
-class PDBrowserActionRunner: NSObject {
+public class PDBrowserActionRunner: NSObject {
     private(set) var pandora: Pandora
     private(set) weak var webView: PDWebView?
 //    private(set) var serviceConfig: PDServiceConfigImpl?
